@@ -2,35 +2,32 @@ import {getUserByEmail, createUser} from '../controllers/UserController'
 import {Request, Response} from 'express';
 import { random, authentication } from '../utils/authUtils';
 
-export const register = (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response) => {
     try{
-        const {email, name, password } = req.body;
+        const {email, username, password } = req.body;
 
-        if(!email || !name || !password){
+        if(!email || !username || !password){
             throw Error("Missing fields");
         }
 
-        const existingUser = getUserByEmail(email);
+        const existingUser = await getUserByEmail(email);
 
         if(existingUser){
             throw Error("User already exists");
         }
 
         const salt = random();
-        const user = createUser({
-            username: name,
+        const user = await createUser({
+            username,
             email,
             authentication: {
                 password: authentication(salt, password),
                 salt
             }
         })
-
         return res.status(201).json(user).end();
-
-
     }catch(error){
         console.log(error);
-        return res.status(400);
+        return res.status(400).json({error: error.message}).end();
     }
 }
