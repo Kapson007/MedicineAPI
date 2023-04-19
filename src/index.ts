@@ -4,12 +4,15 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { connect } from "./db/connectToDB";
+import medicines from "./routes/medicines";
 
 dotenv.config();
 
+const BASIC_URL = process.env.BASIC_URL;
 const app = express();
 
 app.use(bodyParser.json());
+app.use(`${BASIC_URL}/medicines`, medicines());
 
 const server = http.createServer(app);
 
