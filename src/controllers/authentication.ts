@@ -5,9 +5,10 @@ import { random, authentication } from '../utils/authUtils';
 export const login = async (req: Request, res: Response) => {
 
     try{
-        const { email, password } = req.body;
+        const { email, password } = await req.body;
 
         if(!email || !password){
+            console.log(email, password);
             throw Error("Missing fields");
         }
 
@@ -15,20 +16,32 @@ export const login = async (req: Request, res: Response) => {
         const user = await getUserByEmail(email).select("+authentication.password +authentication.salt");
 
         if(!user){
-            return res.status(404).json("User does not exist!").end();
+            return res.status(404).json({
+                status: "User does not exist!",
+                statusCode: 404
+            }).end();
         }
 
         const expectedPassword = authentication(user.authentication.salt, password);
 
         if(user.authentication.password !== expectedPassword){
-            return res.status(403).json("Invalid credentials").end();
+            return res.status(403).json({
+                status: "Invalid Credentials",
+                statusCode: 403
+            }).end();
         }
 
-        return res.status(200).json("Logged in").end();
+        return res.status(201).json({
+            status:"Logged in",
+            statusCode: 201,
+        }).end();
 
     }catch(error){
         console.log(error);
-        return res.status(400).json({error: error.message}).end();
+        return res.status(400).json({
+            error: error.message,
+            stautsCode: 400
+        }).end();
     }
 }
 
