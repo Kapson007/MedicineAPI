@@ -1,11 +1,11 @@
 import {Router, Response, Request} from 'express';
+import medicinesController from '../controllers/medicinesController';
+
 
 export default () => {
     const api = Router();
 
-    api.get('/', (req: Request, res: Response) => {
-        res.send('Hello medicines');
-    });
+    api.get('/', medicinesController.findAll)
 
     return api;
 }
