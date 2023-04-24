@@ -22,9 +22,13 @@ export const medicinesController: IMedicineController = {
             // return medicines from the newest to the oldest
             const offset = parseInt(req.query.offset as string) || 0
             const perPage = parseInt(req.query.per_page as string) || 10;
-            const order = req.query.order as Order || "desc";
 
-            const medicinesPromise = Medicines.find(req.filters).skip(offset).limit(perPage).sort(order);
+            // sorting logic based on query params and fallbacks, passing to config object
+            const sort_by = req.query.sort_by as string || "createdAt";
+            const order_by = req.query.order_by as Order || "desc";
+            const sortFilter = {[sort_by]: order_by};
+
+            const medicinesPromise = Medicines.find(req.filters).skip(offset).limit(perPage).sort(sortFilter);
             const medicinesCountPromise = Medicines.count(req.filters);
             const [medicines, medicinesCount] = await Promise.all([medicinesPromise, medicinesCountPromise])
 
