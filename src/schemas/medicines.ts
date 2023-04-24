@@ -13,11 +13,11 @@ const medicinesSchema = new mongoose.Schema({
         enum: ['cures', 'supplements', 'vaccines'],
         required: true,
     },
-    manufacturer: {
+    manufactuer: {
         type: String,
         required: true,
     },
-    activeSubsrtance: {
+    activeSubstance: {
         type: String,
         required: true,
     },

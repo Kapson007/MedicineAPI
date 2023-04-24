@@ -1,11 +1,26 @@
 import {Router, Response, Request} from 'express';
-import medicinesController from '../controllers/medicinesController';
+import {medicinesController} from '../controllers/medicinesController';
 
-
-export default () => {
+export default ()  => {
     const api = Router();
 
-    api.get('/', medicinesController.findAll)
+    // GET /medicines
+    api.get('/', medicinesController.findAllMedicines)
+
+    // GET /medicines/:id
+    api.get('/:id', medicinesController.findMedicine)
+
+    // POST /medicines
+    api.post('/', medicinesController.createMedicine)
+
+    // PUT /medicines/:id
+    api.put('/:id', medicinesController.updateMedicine)
+
+    // PATCH /medicines/:id
+    api.patch('/:id', medicinesController.updateMedicinePartially)
+
+    // DELETE /medicines/:id
+    api.delete('/:id', medicinesController.deleteMedicine)
 
     return api;
 }
