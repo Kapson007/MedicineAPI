@@ -1,7 +1,7 @@
 import {Router, Response, Request, NextFunction} from 'express';
-import {Medicines} from '../schemas/Medicines';
+import {Medicines} from '../schemas/medicines';
 import {IMedicines, Order} from '../interfaces/IMedicines';
-import {IMedicineController} from '../interfaces/medicineController';
+import {IMedicineController, IFilter} from '../interfaces/medicineController';
 import {handleError} from '../utils/errorHandlingUtils'
 import {errorMachine} from '../utils/errorHandlingUtils'
 
@@ -17,15 +17,19 @@ export const medicinesController: IMedicineController = {
 
     },
 
-    async findAllMedicines(req: Request, res: Response) {
+    async findAllMedicines(req: IFilter, res: Response) {
         try {
             // return medicines from the newest to the oldest
             const offset = parseInt(req.query.offset as string) || 0
-            const perPage = parseInt(req.query.per_page as Order) || 10;
-            const order = req.query.order as Order || "desc";
+            const perPage = parseInt(req.query.per_page as string) || 10;
 
-            const medicinesPromise = Medicines.find().skip(offset).limit(perPage).sort({createdAt: order});
-            const medicinesCountPromise = Medicines.count();
+            // sorting logic based on query params and fallbacks, passing to config object
+            const sort_by = req.query.sort_by as string || "createdAt";
+            const order_by = req.query.order_by as Order || "desc";
+            const sortFilter = {[sort_by]: order_by};
+
+            const medicinesPromise = Medicines.find(req.filters).skip(offset).limit(perPage).sort(sortFilter);
+            const medicinesCountPromise = Medicines.count(req.filters);
             const [medicines, medicinesCount] = await Promise.all([medicinesPromise, medicinesCountPromise])
 
             handleError(medicines, "Not Found")
