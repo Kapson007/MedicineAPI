@@ -1,4 +1,5 @@
 export type Type = 'cures' | 'supplements' | 'vaccines';
+export type Order = "asc" | "desc";
 
 export interface IMedicines {
     name: string;

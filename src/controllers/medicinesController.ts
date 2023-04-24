@@ -1,6 +1,6 @@
 import {Router, Response, Request, NextFunction} from 'express';
 import {Medicines} from '../schemas/Medicines';
-import {IMedicines} from '../interfaces/IMedicines';
+import {IMedicines, Order} from '../interfaces/IMedicines';
 import {IMedicineController} from '../interfaces/medicineController';
 import {handleError} from '../utils/errorHandlingUtils'
 import {errorMachine} from '../utils/errorHandlingUtils'
@@ -19,9 +19,18 @@ export const medicinesController: IMedicineController = {
 
     async findAllMedicines(req: Request, res: Response) {
         try {
-            const medicines = await Medicines.find().sort({createdAt: "desc"});
+            // return medicines from the newest to the oldest
+            const offset = parseInt(req.query.offset as string) || 0
+            const perPage = parseInt(req.query.per_page as Order) || 10;
+            const order = req.query.order as Order || "desc";
+
+            const medicinesPromise = Medicines.find().skip(offset).limit(perPage).sort({createdAt: order});
+            const medicinesCountPromise = Medicines.count();
+            const [medicines, medicinesCount] = await Promise.all([medicinesPromise, medicinesCountPromise])
+
             handleError(medicines, "Not Found")
-            return res.status(200).json({data: medicines, code: 200}).end();
+            handleError(medicinesCount, "Not Found")
+            return res.status(200).json({data: medicines, count: medicinesCount, code: 200}).end();
         } catch (err) {
             errorMachine(res, err);
         }
