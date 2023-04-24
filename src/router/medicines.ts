@@ -1,11 +1,12 @@
 import {Router, Response, Request} from 'express';
 import {medicinesController} from '../controllers/medicinesController';
+import {filterMedicines} from '../middlewares/filters';
 
 export default ()  => {
     const api = Router();
 
     // GET /medicines
-    api.get('/', medicinesController.findAllMedicines)
+    api.get('/', filterMedicines, medicinesController.findAllMedicines)
 
     // GET /medicines/:id
     api.get('/:id', medicinesController.findMedicine)
