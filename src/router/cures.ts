@@ -8,5 +8,8 @@ export default () => {
     // GET /cures/:id
     api.get('/:id', filterMedicines, curesController.findCure);
 
+    // GET /cures
+    api.get('/', filterMedicines, curesController.findAllCures)
+
     return api;
 }
