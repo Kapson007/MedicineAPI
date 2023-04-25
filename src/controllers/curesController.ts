@@ -1,10 +1,12 @@
 import {Request, Response} from 'express';
 import {Medicines} from '../schemas/medicines';
 import {handleError, errorMachine} from '../utils/errorHandlingUtils';
-import {IFilter} from '../interfaces/medicineController';
-import {Order} from '../interfaces/IMedicines';
+import {IFilter} from '../interfaces/IMedicineController';
+import {IMedicines, Order} from '../interfaces/IMedicines';
+import {ICureController} from '../interfaces/ICureController';
+import { ICures } from 'interfaces/ICures';
 
-export default {
+export const curesController: ICureController  =  {
     async findCure(req: Request, res: Response) {
         try{
             const cure = await Medicines.findById(req.params.id);
@@ -47,4 +49,50 @@ export default {
             errorMachine(res, err);
         }
     },
+
+    async createCure(req: Request, res: Response) {
+        try{
+            const cureData: IMedicines = req.body;
+            const cureToAdd = await new Medicines(cureData).save();
+            handleError(cureToAdd, "Bad Request");
+            return res.status(201).json({data: cureData,message: "Cure has been created" ,code: 201}).end();
+        }catch (err){
+            errorMachine(res, err);
+        }
+    },
+
+    async updateCure(req: Request, res: Response) {
+        try{
+            const cureData: IMedicines = req.body;
+            const cure = await Medicines.findByIdAndUpdate({_id: req.params.id}, cureData, {new: true});
+            handleError(cure, "Not Found");
+            return res.status(200).json({data: cure, message: `Cure with id:${req.params.id} has been updated`,code: 200}).end();
+        }catch(err){
+            errorMachine(res, err);
+        }
+    },
+
+    async updateCurePartially(req: Request, res: Response) {
+        try{
+            const {...rest} = req.body;
+            // const cureProp = `cures.${Object.keys(rest)[0]}`;
+            // console.log(Object.keys(rest));
+            const cureToUpdate = await Medicines.findByIdAndUpdate({_id: req.params.id}, {$set: {['cures']: rest}}, {new: true});
+            handleError(cureToUpdate, "Not Found");
+            res.status(204).json({message: `Cure with id:${req.params.id} has been updated partially`, code: 204}).end();
+        }catch(err){
+            errorMachine(res, err);
+        }
+    },
+
+    async deleteCure(req: Request, res: Response) {
+        try{
+            const cureToDelete = await Medicines.findByIdAndRemove({_id: req.params.id});
+            handleError(cureToDelete, "Not Found");
+            return res.status(204).json({message: `No content. Cure with id:${req.params.id} has been deleted`, code: 204}).end();
+        }catch(err){
+            errorMachine(res, err);
+        }
+    }
+
 }

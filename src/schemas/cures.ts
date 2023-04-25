@@ -3,7 +3,7 @@ import {ICures, CureType} from '../interfaces/ICures';
 
 export const cureSchema = new mongoose.Schema(
     {
-        requiredPrescription:{
+        requiredPrescription: {
             type: Boolean,
             required: true,
         },
@@ -12,8 +12,16 @@ export const cureSchema = new mongoose.Schema(
             enum: ['syrop', 'tabletka', 'maść', 'krople', 'czopek', 'pigułka'],
             required: true,
         },
+        category: {
+            type: String,
+            enum: ["przeciwbólowe", "psychiatryczne", "steroidowe", "antybiotyki", "antydepresyjne", "antyhistaminowe", "hormonalne", "przeciwpasożytnicze", "antykolagulanty", "immunosupresyjne", "dermatologiczne", "przeciwgorączkowe", "otorynalaryngologiczne", "chemioterapia", "diabetyczne", "przeciwwirusowe", "przeciwgrzybicze"],
+            required: true,
+        },
         singleDose: {
-            type: Number,
+            type: {
+                value: Number,
+                unit: String,
+            },
             required: true,
         },
         ingredients: {
@@ -28,3 +36,5 @@ export const cureSchema = new mongoose.Schema(
         _id: false,
         autoindex: false
     });
+
+export const Cures = mongoose.model<ICures>('Cures', cureSchema);
