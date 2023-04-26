@@ -2,7 +2,7 @@ import {Router} from 'express';
 import {curesController} from '../controllers/curesController';
 import {filterMedicines} from '../middlewares/filters';
 
-export default () => {
+export default (): Router => {
     const api = Router();
 
     // GET /cures

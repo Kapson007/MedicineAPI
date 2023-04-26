@@ -7,6 +7,7 @@ import { connect } from "./db/connectToDB";
 import medicines from "./router/medicines"
 import cures from "./router/cures";
 import router from "./router/index";
+import supplemets from "./router/supplements";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(`/medicines`, medicines());
 app.use('/cures', cures());
+app.use('/supplements', supplemets());
 app.use('/auth', router());
 
 const server = http.createServer(app);

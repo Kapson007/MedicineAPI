@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import {IMedicines } from '../interfaces/IMedicines';
 import {ICures} from '../interfaces/ICures';
 import {cureSchema} from './cures';
+import {supplementsSchema} from './supplements';
 
 const medicinesSchema = new mongoose.Schema({
     name: {
@@ -22,6 +23,7 @@ const medicinesSchema = new mongoose.Schema({
         required: true,
     },
     cures: cureSchema,
+    supplements: supplementsSchema,
     },
     {
         timestamps: true,
