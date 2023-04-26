@@ -75,9 +75,7 @@ export const curesController: ICureController  =  {
     async updateCurePartially(req: Request, res: Response) {
         try{
             const {...rest} = req.body;
-            // const cureProp = `cures.${Object.keys(rest)[0]}`;
-            // console.log(Object.keys(rest));
-            const cureToUpdate = await Medicines.findByIdAndUpdate({_id: req.params.id}, {$set: {['cures']: rest}}, {new: true});
+            const cureToUpdate = await Medicines.findByIdAndUpdate({_id: req.params.id}, {...rest}, {new: true});
             handleError(cureToUpdate, "Not Found");
             res.status(204).json({message: `Cure with id:${req.params.id} has been updated partially`, code: 204}).end();
         }catch(err){
