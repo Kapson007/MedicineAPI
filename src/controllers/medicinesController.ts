@@ -1,7 +1,7 @@
 import {Router, Response, Request, NextFunction} from 'express';
 import {Medicines} from '../schemas/medicines';
 import {IMedicines, Order} from '../interfaces/IMedicines';
-import {IMedicineController, IFilter} from '../interfaces/medicineController';
+import {IMedicineController, IFilter} from '../interfaces/IMedicineController';
 import {handleError} from '../utils/errorHandlingUtils'
 import {errorMachine} from '../utils/errorHandlingUtils'
 
@@ -69,7 +69,7 @@ export const medicinesController: IMedicineController = {
                 ...rest
             }, {new: true});
             handleError(updatedMedicine, "Not Found");
-            return res.status(200).json({data: rest, message: "Resource has been updated partiallly", code: 200}).end();
+            return res.status(204).json({message: "Resource has been updated partiallly", code: 204}).end();
         } catch (err) {
             errorMachine(res, err);
         }

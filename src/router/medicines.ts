@@ -1,4 +1,4 @@
-import {Router, Response, Request} from 'express';
+import {Router} from 'express';
 import {medicinesController} from '../controllers/medicinesController';
 import {filterMedicines} from '../middlewares/filters';
 

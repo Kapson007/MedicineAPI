@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { connect } from "./db/connectToDB";
 import medicines from "./router/medicines"
+import cures from "./router/cures";
 import router from "./router/index";
 
 dotenv.config();
@@ -14,6 +15,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(`/medicines`, medicines());
+app.use('/cures', cures());
 app.use('/auth', router());
 
 const server = http.createServer(app);
