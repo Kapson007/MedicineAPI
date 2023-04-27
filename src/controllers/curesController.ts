@@ -5,6 +5,7 @@ import {IFilter} from '../interfaces/IMedicineController';
 import {IMedicines, Order} from '../interfaces/IMedicines';
 import {ICureController} from '../interfaces/ICureController';
 import { ICures } from 'interfaces/ICures';
+import {isNotEmpty} from '../middlewares/filters';
 
 export const curesController: ICureController  =  {
     async findCure(req: Request, res: Response) {
@@ -20,8 +21,8 @@ export const curesController: ICureController  =  {
     async findAllCures(req: IFilter, res: Response) {
         try{
             // filters
-             const filters = req.filters ? req.filters : {type: 'cures'};
-
+             const filters =  isNotEmpty(req.filters) ? req.filters : {type: 'cures'};
+             console.log(filters);
              // pagination
             const offset = parseInt(req.query.offset as string) || 0;
             const perPage = parseInt(req.query.per_page as string) || 10;

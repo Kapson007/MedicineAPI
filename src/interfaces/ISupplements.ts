@@ -1,6 +1,6 @@
 import {SingleDose} from './ICures';
 
-type SupplementForm = "krople" | "pastylki rozpuszczalne" | "tabletka" | "napar" | "olej";
+type SupplementForm = "krople" | "pastylka rozpuszczalna" | "tabletka" | "napar" | "olej";
 type SupplementAction = "uspokajający" | "wzmacniający odporność" | "budowa sylwetki" | "nasenny" | "prebiotyk" | "gastryczny"
 
 export interface ISupplements {

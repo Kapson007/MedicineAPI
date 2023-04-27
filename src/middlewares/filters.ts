@@ -37,3 +37,7 @@ export const filterMedicines = (req: IFilter, res: Response, next: NextFunction)
 export const expandFilters = (path: filterExtended, schema: unknown): string[] => {
    return Object.keys(schema).map(filter =>`${path}.${filter}`);
 }
+
+export const isNotEmpty = (obj: unknown): boolean => {
+    return Object.keys(obj).length !== 0;
+}
