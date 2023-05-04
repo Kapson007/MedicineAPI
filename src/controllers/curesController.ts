@@ -54,6 +54,10 @@ export const curesController: ICureController  =  {
     async createCure(req: Request, res: Response) {
         try{
             const cureData: IMedicines = req.body;
+            const isExist = await Medicines.findOne({name: cureData.name}).exec();
+            if(isExist) {
+                throw new Error("Conflict");
+            }
             const cureToAdd = await new Medicines(cureData).save();
             handleError(cureToAdd, "Bad Request");
             return res.status(201).json({data: cureData,message: "Cure has been created" ,code: 201}).end();

@@ -50,8 +50,11 @@ export const supplementsController: ISupplementController = {
     async createSupplement(req: Request, res: Response) {
         try {
             const supplementsData = req.body;
+            const isExist = await Medicines.findOne({name: supplementsData.name}).exec();
+            if(isExist) {
+                throw new Error("Conflict");
+            }
             const supplement = await new Medicines(supplementsData).save();
-            handleError(supplement, "Bad Request");
             return res.status(201).json({
                 data: supplementsData,
                 message: "Supplement has been created",

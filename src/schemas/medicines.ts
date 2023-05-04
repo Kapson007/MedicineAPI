@@ -8,6 +8,7 @@ const medicinesSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        unique: true,
     },
     type: {
         type: String,
@@ -28,7 +29,6 @@ const medicinesSchema = new mongoose.Schema({
     {
         timestamps: true,
     }
-
 );
 
 export const Medicines = mongoose.model<IMedicines>('Medicines', medicinesSchema);
