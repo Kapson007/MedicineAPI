@@ -1,6 +1,7 @@
 import {Router} from 'express';
 import {medicinesController} from '../controllers/medicinesController';
 import {filterMedicines} from '../middlewares/filters';
+import authorize from '../middlewares/authorization';
 
 export default () => {
     const api = Router();
@@ -12,7 +13,7 @@ export default () => {
     api.get('/:id', medicinesController.findMedicine)
 
     // POST /medicines
-    api.post('/', medicinesController.createMedicine)
+    api.post('/',authorize ,medicinesController.createMedicine)
 
     // PUT /medicines/:id
     api.put('/:id', medicinesController.updateMedicine)
