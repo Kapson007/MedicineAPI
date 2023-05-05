@@ -2,7 +2,7 @@ import {Router} from 'express';
 import {medicinesController} from '../controllers/medicinesController';
 import {filterMedicines} from '../middlewares/filters';
 
-export default ()  => {
+export default () => {
     const api = Router();
 
     // GET /medicines
@@ -16,6 +16,9 @@ export default ()  => {
 
     // PUT /medicines/:id
     api.put('/:id', medicinesController.updateMedicine)
+
+    // PUT /medicines - atomic operation example
+    api.patch('/', medicinesController.updateManufactuer)
 
     // PATCH /medicines/:id
     api.patch('/:id', medicinesController.updateMedicinePartially)

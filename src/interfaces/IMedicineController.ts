@@ -6,6 +6,7 @@ export interface IMedicineController {
     findAllMedicines(req: Request, res: Response): Promise<Response>;
     createMedicine(req: Request, res: Response): Promise<Response>;
     updateMedicine(req: Request, res: Response): Promise<Response>;
+    updateManufactuer(req: Request, res: Response): Promise<Response>;
     updateMedicinePartially(req: Request, res: Response): void;
     deleteMedicine(req: Request, res: Response): Promise<Response>;
 }
