@@ -51,7 +51,7 @@ export const supplementsController: ISupplementController = {
         try {
             const supplementsData = req.body;
             const isExist = await Medicines.findOne({name: supplementsData.name}).exec();
-            if(isExist) {
+            if (isExist) {
                 throw new Error("Conflict");
             }
             const supplement = await new Medicines(supplementsData).save();
@@ -78,7 +78,7 @@ export const supplementsController: ISupplementController = {
             errorMachine(res, err);
         }
     },
-    async updateSupplementPartially(req: Request, res: Response){
+    async updateSupplementPartially(req: Request, res: Response) {
         //    add modyfing partially
     },
     async deleteSupplement(req: Request, res: Response) {

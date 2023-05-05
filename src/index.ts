@@ -8,6 +8,7 @@ import medicines from "./router/medicines"
 import cures from "./router/cures";
 import router from "./router/index";
 import supplemets from "./router/supplements";
+import vaccines from "./router/vaccines";
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use(`/medicines`, medicines());
 app.use('/cures', cures());
 app.use('/supplements', supplemets());
+app.use('/vaccines', vaccines());
 app.use('/auth', router());
 
 const server = http.createServer(app);
