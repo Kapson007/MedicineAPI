@@ -19,7 +19,7 @@ export const supplementsSchema = new mongoose.Schema({
         },
         form: {
             type: String,
-            enum: ['krople', 'pastylki rozpuszczalne', 'tabletka', 'napar', 'olej'],
+            enum: ['krople', 'pastylki rozpuszczalne', 'tabletka', 'napar', 'olej', 'proszek'],
             required: true,
         }
     },

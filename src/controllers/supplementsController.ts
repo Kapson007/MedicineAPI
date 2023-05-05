@@ -71,7 +71,7 @@ export const supplementsController: ISupplementController = {
             handleError(supplementToUpdate, "Not Found");
             return res.status(200).json({
                 data: supplementToUpdate,
-                message: `Cure with id:${req.params.id} has been updated`,
+                message: `Supplement with id:${req.params.id} has been updated`,
                 code: 200
             }).end();
         } catch (err) {
