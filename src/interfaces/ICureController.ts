@@ -1,6 +1,5 @@
 import {Request, Response} from 'express';
 
-
 export interface ICureController {
     findCure(req: Request, res: Response): void;
     findAllCures(req: Request, res: Response): void;

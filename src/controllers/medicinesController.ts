@@ -43,8 +43,11 @@ export const medicinesController: IMedicineController = {
     async createMedicine(req: Request, res: Response) {
         try {
             const medicineData: IMedicines = req.body;
+            const isExist = await Medicines.findOne({name: medicineData.name}).exec();
+            if(isExist) {
+                throw new Error("Conflict");
+            }
             const medicine = await new Medicines(medicineData).save();
-            handleError(medicine, "Bad Request");
             return res.status(201).send({data: medicineData, message: "Medicine has been created"});
         } catch (err) {
             errorMachine(res, err);

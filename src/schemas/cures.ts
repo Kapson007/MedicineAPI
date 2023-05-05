@@ -26,10 +26,12 @@ export const cureSchema = new mongoose.Schema(
         },
         ingredients: {
             type: String,
+            required: true,
         },
         recommendation: {
             type: String,
             enum: ['dzieci', 'dorośli', 'dzieci i dorośli'],
+            required: true,
         }
     },
     {

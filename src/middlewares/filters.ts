@@ -16,12 +16,15 @@ export const filterMedicines = (req: IFilter, res: Response, next: NextFunction)
     switch(req.baseUrl.slice(1)) {
         case 'cures':{
             avaliableFilters = Array.from(new Set(avaliableFilters.concat(expandFilters('cures', Cures.schema.paths))));
+            break;
         }
         // TODO: add filter for supplements and vaccines
         case 'supplements':{
+            avaliableFilters = Array.from(new Set(avaliableFilters.concat(expandFilters('supplements', Cures.schema.paths))));
             break;
         }
         case 'vaccines':{
+            avaliableFilters = Array.from(new Set(avaliableFilters.concat(expandFilters('vaccines', Cures.schema.paths))));
             break;
         }
         // if endpoint is medicne, then not modify list and past basic filters
@@ -33,4 +36,8 @@ export const filterMedicines = (req: IFilter, res: Response, next: NextFunction)
 
 export const expandFilters = (path: filterExtended, schema: unknown): string[] => {
    return Object.keys(schema).map(filter =>`${path}.${filter}`);
+}
+
+export const isNotEmpty = (obj: unknown): boolean => {
+    return Object.keys(obj).length !== 0;
 }
