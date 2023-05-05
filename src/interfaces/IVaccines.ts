@@ -7,7 +7,8 @@ type VaccineCategory = "mRNA" | "żywe atenuowane" | "antygeny";
 export interface IVaccine {
     singleDose: SingleDose,
     form: VaccineForm,
-    isRequired: boolean,
+    category: VaccineCategory,
+    isObligatory: boolean,
     minAgeOfDose: number,
     ingredients: string,
 }
