@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import {IVaccine} from '../interfaces/IVaccines';
 
-const vaccineSchema = new mongoose.Schema({
+export const vaccineSchema = new mongoose.Schema({
     singleDose: {
         type: {
             value: Number,

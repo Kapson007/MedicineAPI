@@ -43,9 +43,7 @@ export const curesController: ICureController  =  {
             const [cures, cureCount] = await Promise.all([curesPromise, cureCountPromise]);
 
             handleError(cures, "Not Found");
-            handleError(cureCount, "Not Found");
             return res.status(200).json({data: cures, count: cureCount, code: 200}).end();
-
         }catch(err){
             errorMachine(res, err);
         }

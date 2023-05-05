@@ -33,7 +33,6 @@ export const medicinesController: IMedicineController = {
             const [medicines, medicinesCount] = await Promise.all([medicinesPromise, medicinesCountPromise])
 
             handleError(medicines, "Not Found")
-            handleError(medicinesCount, "Not Found")
             return res.status(200).json({data: medicines, count: medicinesCount, code: 200}).end();
         } catch (err) {
             errorMachine(res, err);
