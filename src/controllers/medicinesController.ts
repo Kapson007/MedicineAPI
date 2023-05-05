@@ -57,7 +57,7 @@ export const medicinesController: IMedicineController = {
             const medicineData: IMedicines = req.body;
             const updatedMedicine = await Medicines.findByIdAndUpdate({_id: req.params.id}, medicineData, {new: true});
             handleError(medicineData, "Not Found")
-            return res.status(200).json({data: medicineData, message: "Resource has been updated", code: 200}).end();
+            return res.status(200).json({data: medicineData, message: "Medicine has been updated", code: 200}).end();
         } catch (err) {
             errorMachine(res, err);
         }
@@ -78,7 +78,7 @@ export const medicinesController: IMedicineController = {
             // if no resource has been updated, throw an error
             if (areResourceUpdated.modifiedCount === 0) throw new Error("Not Found");
             return res.status(200).json({
-                message: `Manufactuer has been updated from ${filter} to ${manufactuer}`,
+                message: `Manufactuers has been updated from ${filter} to ${manufactuer}. Modified ${areResourceUpdated.modifiedCount} resources}`,
                 code: 200
             }).end();
         } catch (err) {
@@ -93,7 +93,7 @@ export const medicinesController: IMedicineController = {
                 ...rest
             }, {new: true});
             handleError(updatedMedicine, "Not Found");
-            return res.status(204).json({message: "Resource has been updated partiallly", code: 204}).end();
+            return res.status(204).json({message: "Medicine has been updated partiallly", code: 204}).end();
         } catch (err) {
             errorMachine(res, err);
         }
@@ -103,7 +103,7 @@ export const medicinesController: IMedicineController = {
         try {
             const medicineToUpdate = await Medicines.findByIdAndRemove({_id: req.params.id});
             handleError(medicineToUpdate, "Not Found");
-            return res.status(204).json({message: "No Content. Resource has been deleted", code: 204}).end();
+            return res.status(204).json({message: "No Content. Medicine has been deleted", code: 204}).end();
         } catch (err) {
             errorMachine(res, err);
         }
