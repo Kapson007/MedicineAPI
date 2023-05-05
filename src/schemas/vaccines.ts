@@ -5,7 +5,10 @@ export const vaccineSchema = new mongoose.Schema({
     singleDose: {
         type: {
             value: Number,
-            unit: String,
+            unit: {
+                type: String,
+                enum: ["mg", "ug", "g", "ml"]
+            },
         },
         required: true
     },
@@ -16,7 +19,7 @@ export const vaccineSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ['mRNA', 'żywe atenuowane', 'antygeny'],
+        enum: ['mRNA', 'żywe atenuowane', 'inaktywowana'],
     },
     isObligatory: {
         type: Boolean,

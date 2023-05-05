@@ -38,7 +38,7 @@ export const vaccinesController: IVaccineController = {
                     .sort(sortFilter);
 
             const vaccinesCountPromise = Medicines.count(filters);
-            const [vaccines, vaccinesCount] = await Promise.all([vaccinesPromise, vaccinesPromise]);
+            const [vaccines, vaccinesCount] = await Promise.all([vaccinesPromise, vaccinesCountPromise]);
             handleError(vaccines, "Not Found");
             return res.status(200).json({data: vaccines, count: vaccinesCount, code: 200}).end();
         } catch (err) {
@@ -76,14 +76,14 @@ export const vaccinesController: IVaccineController = {
     updateVaccinePartially(req: Request, res: Response): void {
     },
     async deleteVaccine(req: Request, res: Response) {
-        try{
+        try {
             const vaccineToDelete = await Medicines.findByIdAndDelete(req.params.id);
             handleError(vaccineToDelete, "Not Found");
             return res.status(204).json({
                 message: `Vaccine with ${req.params.id} has been deleted`,
                 code: 204
             }).end()
-        }catch(err){
+        } catch (err) {
             errorMachine(res, err);
         }
     }
