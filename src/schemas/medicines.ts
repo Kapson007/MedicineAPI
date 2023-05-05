@@ -3,6 +3,7 @@ import {IMedicines } from '../interfaces/IMedicines';
 import {ICures} from '../interfaces/ICures';
 import {cureSchema} from './cures';
 import {supplementsSchema} from './supplements';
+import {vaccineSchema} from './vaccines';
 
 const medicinesSchema = new mongoose.Schema({
     name: {
@@ -25,6 +26,7 @@ const medicinesSchema = new mongoose.Schema({
     },
     cures: cureSchema,
     supplements: supplementsSchema,
+    vaccines: vaccineSchema,
     },
     {
         timestamps: true,

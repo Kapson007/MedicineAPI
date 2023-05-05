@@ -13,7 +13,7 @@ export const supplementsController: ISupplementController = {
             handleError(supplement, "Not Found");
             return res.status(200).json({data: supplement, code: 200}).end()
         } catch (err) {
-            handleError(res, err);
+            errorMachine(res, err);
         }
     },
     async findAllSupplemments(req: IFilter, res: Response) {
@@ -41,17 +41,16 @@ export const supplementsController: ISupplementController = {
             const [supplements, supplementsCount] = await Promise.all([supplementsPromise, supplementsCountPromise]);
 
             handleError(supplements, "Not Found");
-            handleError(supplementsCount, "Not Found");
             return res.status(200).json({data: supplements, count: supplementsCount, code: 200}).end();
         } catch (err) {
-            handleError(res, err);
+            errorMachine(res, err);
         }
     },
     async createSupplement(req: Request, res: Response) {
         try {
             const supplementsData = req.body;
             const isExist = await Medicines.findOne({name: supplementsData.name}).exec();
-            if(isExist) {
+            if (isExist) {
                 throw new Error("Conflict");
             }
             const supplement = await new Medicines(supplementsData).save();
@@ -78,7 +77,7 @@ export const supplementsController: ISupplementController = {
             errorMachine(res, err);
         }
     },
-    async updateSupplementPartially(req: Request, res: Response){
+    async updateSupplementPartially(req: Request, res: Response) {
         //    add modyfing partially
     },
     async deleteSupplement(req: Request, res: Response) {
