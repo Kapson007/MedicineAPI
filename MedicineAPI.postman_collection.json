@@ -1,0 +1,1189 @@
+{
+	"info": {
+		"_postman_id": "6d0ca492-4f73-4d11-ba1b-069328856285",
+		"name": "MedicineAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AUTH",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"{{email}}\",\n    \"password\":\"{{password}}\",\n    \"username\":\"{{name}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"{{email}}\",\n    \"password\":\"{{password}}\",\n    \"id\": \"{{userID}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"{{REFRESH_TOKEN}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{auth-endpoint}}/refresh-token",
+							"host": [
+								"{{auth-endpoint}}"
+							],
+							"path": [
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Resources",
+			"item": [
+				{
+					"name": "Medicines",
+					"item": [
+						{
+							"name": "Get Medicines",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint}}/medicines",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"medicines"
+									],
+									"query": [
+										{
+											"key": "sort_by",
+											"value": "name",
+											"disabled": true
+										},
+										{
+											"key": "order_by",
+											"value": "asc",
+											"disabled": true
+										},
+										{
+											"key": "offset",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "per_page",
+											"value": "3",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Medicine",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{endpoint}}/medicines/64469c55e4de2db193b1db7c?",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"medicines",
+										"64469c55e4de2db193b1db7c"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Medicne",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n{\n    \"name\": \"Hascovir Control\",\n    \"type\": \"cures\",\n    \"manufactuer\": \"Hasco-Lek S.A\",\n    \"activeSubstance\": \"Aciclovirum\",\n    \"cures\": {\n        \"requiredPrescription\": false,\n        \"form\": \"tabletka\",\n        \"category\": \"przeciwwirusowe\",\n        \"singleDose\": {\n            \"value\": 400,\n            \"unit\": \"mg\"\n        },\n        \"ingredients\": \"400mg sustancji czynnej\",\n        \"recommendation\": \"dzieci i dorośli\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint}}/medicines",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"medicines"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Medicine",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Polopiryna\",\n    \"type\": \"cures\",\n    \"manufactuer\": \"pfizer\",\n    \"activeSubstance\": \"paracetamol\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint}}/medicines/{{id}}",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"medicines",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Medicine Manufactuer",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"manufactuer\": \"GlaxoSmithKline Biologicals Belgium\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint}}/medicines?manufactuer=HascoMedCo",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"medicines"
+									],
+									"query": [
+										{
+											"key": "manufactuer",
+											"value": "HascoMedCo"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Medicine Partially",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Polopiryna Forte\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{endpoint}}/medicines/{{id}}",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"medicines",
+										"{{id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Medicine",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{endpoint}}/medicines/{{id}}?",
+									"host": [
+										"{{endpoint}}"
+									],
+									"path": [
+										"medicines",
+										"{{id}}"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Cures",
+					"item": [
+						{
+							"name": "Get Cure",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{cures-endpoint}}/{{cureId}}",
+									"host": [
+										"{{cures-endpoint}}"
+									],
+									"path": [
+										"{{cureId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Cures",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{cures-endpoint}}",
+									"host": [
+										"{{cures-endpoint}}"
+									],
+									"query": [
+										{
+											"key": "sort_by",
+											"value": "manufactuer",
+											"disabled": true
+										},
+										{
+											"key": "order_by",
+											"value": "desc",
+											"disabled": true
+										},
+										{
+											"key": "per_page",
+											"value": "3",
+											"disabled": true
+										},
+										{
+											"key": "offset",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "cures.requiredPrescription",
+											"value": "false",
+											"disabled": true
+										},
+										{
+											"key": "cures.form",
+											"value": "syrop",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Cure",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\n{\n    \"name\": \"Hascovir Control Max\",\n    \"type\": \"cures\",\n    \"manufactuer\": \"Hasco-Lek S.A\",\n    \"activeSubstance\": \"Aciclovirum\",\n    \"cures\": {\n        \"requiredPrescription\": false,\n        \"form\": \"tabletka\",\n        \"category\": \"przeciwwirusowe\",\n        \"singleDose\": {\n            \"value\": 400,\n            \"unit\": \"mg\"\n        },\n        \"ingredients\": \"400mg sustancji czynnej\",\n        \"recommendation\": \"dzieci i dorośli\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{cures-endpoint}}",
+									"host": [
+										"{{cures-endpoint}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Cure",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Hascovir Control Forte\",\n    \"type\": \"cures\",\n    \"manufactuer\": \"Hasco-Lek S.A\",\n    \"activeSubstance\": \"Aciclovirum\",\n    \"cures\": {\n        \"requiredPrescription\": false,\n        \"form\": \"tabletka\",\n        \"category\": \"przeciwwirusowe\",\n        \"singleDose\": {\n            \"value\": 400,\n            \"unit\": \"mg\"\n        },\n        \"ingredients\": \"400mg sustancji czynnej\",\n        \"recommendation\": \"dzieci i dorośli\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{cures-endpoint}}/644829df7333599692f757cc",
+									"host": [
+										"{{cures-endpoint}}"
+									],
+									"path": [
+										"644829df7333599692f757cc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Cure Partially",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cures\": {\n        \"requiredPrescription\": false,\n                \"form\": \"syrop\",\n                \"category\": \"przeciwwirusowe\",\n                \"singleDose\": {\n                    \"value\": 400,\n                    \"unit\": \"mg\",\n                    \"_id\": \"64498217cd8f600847699d13\"\n                },\n                \"ingredients\": \"400mg sustancji czynnej\",\n                \"recommendation\": \"dzieci i dorośli\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{cures-endpoint}}/{{cureId}}",
+									"host": [
+										"{{cures-endpoint}}"
+									],
+									"path": [
+										"{{cureId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Cure",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{cures-endpoint}}/{{cureId}}",
+									"host": [
+										"{{cures-endpoint}}"
+									],
+									"path": [
+										"{{cureId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Supplements",
+					"item": [
+						{
+							"name": "Get Supplement",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{supplements-endpoint}}/{{supplementId}}",
+									"host": [
+										"{{supplements-endpoint}}"
+									],
+									"path": [
+										"{{supplementId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Supplements",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{supplements-endpoint}}",
+									"host": [
+										"{{supplements-endpoint}}"
+									],
+									"query": [
+										{
+											"key": "sort_by",
+											"value": "name",
+											"disabled": true
+										},
+										{
+											"key": "order_by",
+											"value": "asc",
+											"disabled": true
+										},
+										{
+											"key": "offset",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "per_page",
+											"value": "3",
+											"disabled": true
+										},
+										{
+											"key": "supplements.action",
+											"value": "budowa%20sylwetki",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Supplement",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"name\": \"Witamina C\",\n    \"type\": \"supplements\",\n    \"manufactuer\": \"pfizer\",\n    \"activeSubstance\": \"kwas foliowy\",\n    \"supplements\": {\n            \"form\": \"tabletka\",\n            \"action\": \"wzmacniający odporność\",\n            \"singleDose\": {\n                \"value\": 450,\n                \"unit\": \"mg\"\n            },\n            \"ingredients\": \"250mg sustancji czynnej\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{supplements-endpoint}}",
+									"host": [
+										"{{supplements-endpoint}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Supplement",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"manufactuer\": \"Ostrovit\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{supplements-endpoint}}/{{supplementId}}",
+									"host": [
+										"{{supplements-endpoint}}"
+									],
+									"path": [
+										"{{supplementId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Supplement Partially",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{supplements-endpoint}}/{{supplementId}}",
+									"host": [
+										"{{supplements-endpoint}}"
+									],
+									"path": [
+										"{{supplementId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Supplement",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{supplements-endpoint}}/{{supplementId}}",
+									"host": [
+										"{{supplements-endpoint}}"
+									],
+									"path": [
+										"{{supplementId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vaccines",
+					"item": [
+						{
+							"name": "Get Vaccine",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{vaccines-enpoint}}/{{vaccineId}}",
+									"host": [
+										"{{vaccines-enpoint}}"
+									],
+									"path": [
+										"{{vaccineId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Vaccines",
+							"request": {
+								"auth": {
+									"type": "jwt",
+									"jwt": [
+										{
+											"key": "algorithm",
+											"value": "HS256",
+											"type": "string"
+										},
+										{
+											"key": "isSecretBase64Encoded",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "payload",
+											"value": "{}",
+											"type": "string"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "headerPrefix",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "queryParamKey",
+											"value": "token",
+											"type": "string"
+										},
+										{
+											"key": "header",
+											"value": "{}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{vaccines-enpoint}}",
+									"host": [
+										"{{vaccines-enpoint}}"
+									],
+									"query": [
+										{
+											"key": "sort_by",
+											"value": "active%20substance",
+											"disabled": true
+										},
+										{
+											"key": "order_by",
+											"value": "asc",
+											"disabled": true
+										},
+										{
+											"key": "offset",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "per_page",
+											"value": "3",
+											"disabled": true
+										},
+										{
+											"key": "vaccines.category",
+											"value": "mRNA",
+											"disabled": true
+										},
+										{
+											"key": "vaccines.isObligatory",
+											"value": "false",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Vaccine",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}`",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"name\": \"Fluarix Tetra\",\n    \"type\": \"vaccines\",\n    \"manufactuer\": \"GlaxoSmithKline Biologicals\",\n    \"activeSubstance\": \"antygeny\",\n    \"vaccines\": {\n            \"form\": \"domięśniowa\",\n            \"singleDose\": {\n                \"value\": 0.5,\n                \"unit\": \"ml\"\n            },\n            \"category\": \"inaktywowana\",\n            \"isObligatory\": true,\n            \"minAgeOfDose\": 6,\n            \"ingredients\": \"hemaglutynina (HA) i neuraminidaza (NA)\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{vaccines-enpoint}}",
+									"host": [
+										"{{vaccines-enpoint}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Vaccine",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"vaccines\": {\n            \"singleDose\": {\n                \"value\": 0.5,\n                \"unit\": \"ml\",\n                \"_id\": \"645540df9a3964bb3f006b98\"\n            },\n            \"form\": \"domięśniowa\",\n            \"category\": \"inaktywowana\",\n            \"isObligatory\": true,\n            \"minAgeOfDose\": 10,\n            \"ingredients\": \"hemaglutynina (HA) i neuraminidaza (NA)\"\n            }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{vaccines-enpoint}}/{{vaccineId}}",
+									"host": [
+										"{{vaccines-enpoint}}"
+									],
+									"path": [
+										"{{vaccineId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Vaccine Partially",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{vaccines-enpoint}}",
+									"host": [
+										"{{vaccines-enpoint}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Vaccine",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{ACCESS_TOKEN}}",
+										"type": "default"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{vaccines-enpoint}}/{{vaccineId}}",
+									"host": [
+										"{{vaccines-enpoint}}"
+									],
+									"path": [
+										"{{vaccineId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "endpoint",
+			"value": "http://localhost:3000",
+			"type": "default"
+		},
+		{
+			"key": "email",
+			"value": "jon.doe@gmail.com",
+			"type": "default"
+		},
+		{
+			"key": "password",
+			"value": "Hellooo123",
+			"type": "default"
+		},
+		{
+			"key": "name",
+			"value": "Jon Doe",
+			"type": "default"
+		},
+		{
+			"key": "id",
+			"value": "64469c55e4de2db193b1db7c",
+			"type": "default"
+		},
+		{
+			"key": "type",
+			"value": "cures",
+			"type": "default"
+		},
+		{
+			"key": "params",
+			"value": "activeSubstance=paracetamol&manufactuer=adaMed",
+			"type": "default"
+		},
+		{
+			"key": "cureId",
+			"value": "644829df7333599692f757cc",
+			"type": "default"
+		},
+		{
+			"key": "offset",
+			"value": "4",
+			"type": "default"
+		},
+		{
+			"key": "per_page",
+			"value": "4",
+			"type": "default"
+		},
+		{
+			"key": "cures-endpoint",
+			"value": "{{endpoint}}/cures",
+			"type": "default"
+		},
+		{
+			"key": "supplements-endpoint",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "supplementId",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "vaccines-enpoint",
+			"value": "{{endpoint}}/vaccines",
+			"type": "default"
+		},
+		{
+			"key": "vaccineId",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "atomicFilter",
+			"value": "manufactuer=All%20Nutrition",
+			"type": "default"
+		},
+		{
+			"key": "userID",
+			"value": "645570043cb410fb93aa649e",
+			"type": "default"
+		},
+		{
+			"key": "ACCESS_TOKEN",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "auth-endpoint",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "REFRESH_TOKEN",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
