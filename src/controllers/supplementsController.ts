@@ -5,6 +5,15 @@ import {handleError, errorMachine} from '../utils/errorHandlingUtils';
 import {IFilter} from '../interfaces/IMedicineController';
 import {IMedicines, Order} from '../interfaces/IMedicines'
 import {isNotEmpty} from '../middlewares/filters';
+import {ISupplements} from '../interfaces/ISupplements';
+
+interface IPatchRequest<T> extends Request {
+    body: T;
+}
+
+type PatchSupplements<T> = {
+    [K in keyof T]?: T[K];
+}
 
 export const supplementsController: ISupplementController = {
     async findSupplement(req: Request, res: Response) {
@@ -77,8 +86,32 @@ export const supplementsController: ISupplementController = {
             errorMachine(res, err);
         }
     },
-    async updateSupplementPartially(req: Request, res: Response) {
+    async updateSupplementPartially(req: IPatchRequest<Partial<IMedicines>>, res: Response) {
         //    add modyfing partially
+        const {id} = req.params;
+        try{
+            const supplementToUpdate = await Medicines.findByIdAndUpdate(
+                id,
+                {
+                    $set: {
+                        ...req.body,
+                        supplements: {
+                        ...(req.body.supplements as PatchSupplements<ISupplements>),
+                        }
+                    }
+                },
+                {new: true}
+            );
+            handleError(supplementToUpdate, "Not Found");
+            return res.status(200).json({
+                data: supplementToUpdate,
+                message: `Supplement with id:${req.params.id} has been updated`,
+                code: 200
+            }).end();
+
+        }catch(err){
+            errorMachine(res, err);
+        }
     },
     async deleteSupplement(req: Request, res: Response) {
         try {
