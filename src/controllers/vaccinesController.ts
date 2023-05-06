@@ -80,13 +80,17 @@ export const vaccinesController: IVaccineController = {
                 id,
                 {
                     $set: {
-                        ...({'vaccines.form': req.body.vaccines.form}),
-                        ...({'vaccines.category': req.body.vaccines.category}),
-                        ...({'vaccines.singleDose.unit': req.body.vaccines.singleDose.unit}),
-                        ...({'vaccines.singleDose.value': req.body.vaccines.singleDose.value}),
-                        ...({'vaccines.ingredients': req.body.vaccines.ingredients}),
-                        ...({'vaccines.minAgeOfDose': req.body.vaccines.minAgeOfDose}),
-                        ...({'vaccines.isObligatory': req.body.vaccines.isObligatory}),
+                        ...(req.body.vaccines && {
+                            'vaccines.form': req.body.vaccines.form,
+                            'vaccines.category': req.body.vaccines.category,
+                            'vaccines.ingredients': req.body.vaccines.ingredients,
+                            'vaccines.minAgeOfDose': req.body.vaccines.minAgeOfDose,
+                            'vaccines.isObligatory': req.body.vaccines.isObligatory
+                        }),
+                        ...(req.body.vaccines.singleDose && {
+                            'vaccines.singleDose.unit': req.body.vaccines.singleDose.unit,
+                            'vaccines.singleDose.value': req.body.vaccines.singleDose.value
+                        })
                     }
                 },
                 {new: true}

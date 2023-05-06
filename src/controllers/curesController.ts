@@ -86,13 +86,17 @@ export const curesController: ICureController = {
                 id,
                 {
                     $set: {
-                        ...({'cures.requiredPrescription': req.body.cures.requiredPrescription}),
-                        ...({'cures.form': req.body.cures.form}),
-                        ...({'cures.singleDose.unit': req.body.cures.singleDose.unit}),
-                        ...({'cures.singleDose.value': req.body.cures.singleDose.value}),
-                        ...({'cures.ingredients': req.body.cures.ingredients}),
-                        ...({'cures.category': req.body.cures.category}),
-                        ...({'cures.recommendation': req.body.cures.recommendation}),
+                        ...(req.body.cures && {
+                            'cures.requiredPrescription': req.body.cures.requiredPrescription,
+                            'cures.form': req.body.cures.form,
+                            'cures.ingredients': req.body.cures.ingredients,
+                            'cures.category': req.body.cures.category,
+                            'cures.recommendation': req.body.cures.recommendation
+                        }),
+                        ...(req.body.cures.singleDose && {
+                            'cures.singleDose.unit': req.body.cures.singleDose.unit,
+                            'cures.singleDose.value': req.body.cures.singleDose.value
+                        }),
                     }
                 },
                 {new: true}
