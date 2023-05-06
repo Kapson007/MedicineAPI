@@ -2,7 +2,7 @@ import {Request, Response} from 'express';
 import {Medicines} from '../schemas/medicines';
 import {handleError, errorMachine} from '../utils/errorHandlingUtils';
 import {IFilter} from '../interfaces/IMedicineController';
-import {IMedicines, Order} from '../interfaces/IMedicines';
+import {IMedicines, Order, IPatchRequest} from '../interfaces/IMedicines';
 import {ICureController} from '../interfaces/ICureController';
 import {ICures} from 'interfaces/ICures';
 import {isNotEmpty} from '../middlewares/filters';
@@ -79,14 +79,33 @@ export const curesController: ICureController = {
         }
     },
 
-    async updateCurePartially(req: Request, res: Response) {
-        try {
-            const {...rest} = req.body;
-            const cureToUpdate = await Medicines.findByIdAndUpdate({_id: req.params.id}, {...rest}, {new: true});
+    async updateCurePartially(req: IPatchRequest<Partial<IMedicines>>, res: Response) {
+        const {id} = req.params;
+        try{
+            const cureToUpdate = await Medicines.findByIdAndUpdate(
+                id,
+                {
+                    $set: {
+                        ...(req.body.cures && {
+                            'cures.requiredPrescription': req.body.cures.requiredPrescription,
+                            'cures.form': req.body.cures.form,
+                            'cures.ingredients': req.body.cures.ingredients,
+                            'cures.category': req.body.cures.category,
+                            'cures.recommendation': req.body.cures.recommendation
+                        }),
+                        ...(req.body.cures.singleDose && {
+                            'cures.singleDose.unit': req.body.cures.singleDose.unit,
+                            'cures.singleDose.value': req.body.cures.singleDose.value
+                        }),
+                    }
+                },
+                {new: true}
+            );
             handleError(cureToUpdate, "Not Found");
-            res.status(204).json({
-                message: `Cure with id:${req.params.id} has been updated partially`,
-                code: 204
+            return res.status(200).json({
+                data: cureToUpdate,
+                message: `Cure with id:${req.params.id} has been updated`,
+                code: 200
             }).end();
         } catch (err) {
             errorMachine(res, err);

@@ -4,7 +4,7 @@ import {errorMachine, handleError} from '../utils/errorHandlingUtils';
 import {Medicines} from '../schemas/medicines';
 import {IFilter} from '../interfaces/IMedicineController';
 import {isNotEmpty} from '../middlewares/filters';
-import {IMedicines, Order} from '../interfaces/IMedicines';
+import {IMedicines, Order, IPatchRequest} from '../interfaces/IMedicines';
 
 export const vaccinesController: IVaccineController = {
     async findVaccine(req: Request, res: Response) {
@@ -73,8 +73,39 @@ export const vaccinesController: IVaccineController = {
             errorMachine(res, err);
         }
     },
-    updateVaccinePartially(req: Request, res: Response): void {
+    async updateVaccinePartially(req: IPatchRequest<Partial<IMedicines>>, res: Response) {
+        const {id} = req.params;
+        try {
+            const vaccineToUpdate = await Medicines.findByIdAndUpdate(
+                id,
+                {
+                    $set: {
+                        ...(req.body.vaccines && {
+                            'vaccines.form': req.body.vaccines.form,
+                            'vaccines.category': req.body.vaccines.category,
+                            'vaccines.ingredients': req.body.vaccines.ingredients,
+                            'vaccines.minAgeOfDose': req.body.vaccines.minAgeOfDose,
+                            'vaccines.isObligatory': req.body.vaccines.isObligatory
+                        }),
+                        ...(req.body.vaccines.singleDose && {
+                            'vaccines.singleDose.unit': req.body.vaccines.singleDose.unit,
+                            'vaccines.singleDose.value': req.body.vaccines.singleDose.value
+                        })
+                    }
+                },
+                {new: true}
+            );
+            handleError(vaccineToUpdate, "Not Found");
+            return res.status(200).json({
+                data: vaccineToUpdate,
+                message: `Vaccine with id:${req.params.id} has been updated`,
+                code: 200
+            }).end();
+        } catch (err) {
+            errorMachine(res, err);
+        }
     },
+
     async deleteVaccine(req: Request, res: Response) {
         try {
             const vaccineToDelete = await Medicines.findByIdAndDelete(req.params.id);

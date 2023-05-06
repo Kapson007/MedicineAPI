@@ -3,7 +3,7 @@ import {ISupplementController} from '../interfaces/ISupplementsController';
 import {Medicines} from '../schemas/medicines';
 import {handleError, errorMachine} from '../utils/errorHandlingUtils';
 import {IFilter} from '../interfaces/IMedicineController';
-import {IMedicines, Order} from '../interfaces/IMedicines'
+import {IMedicines, Order, IPatchRequest} from '../interfaces/IMedicines'
 import {isNotEmpty} from '../middlewares/filters';
 
 export const supplementsController: ISupplementController = {
@@ -77,8 +77,37 @@ export const supplementsController: ISupplementController = {
             errorMachine(res, err);
         }
     },
-    async updateSupplementPartially(req: Request, res: Response) {
+    async updateSupplementPartially(req: IPatchRequest<Partial<IMedicines>>, res: Response) {
         //    add modyfing partially
+        const {id} = req.params;
+        try {
+            const supplementToUpdate = await Medicines.findByIdAndUpdate(
+                id,
+                {
+                    $set: {
+                        ...(req.body.supplements && {
+                            'supplements.action': req.body.supplements.action,
+                            'supplements.form': req.body.supplements.form,
+                            'supplements.ingredients': req.body.supplements.ingredients
+                        }),
+                        ...(req.body.supplements.singleDose && {
+                            'supplements.singleDose.unit': req.body.supplements.singleDose.unit,
+                            'supplements.singleDose.value': req.body.supplements.singleDose.value,
+                        }),
+                    }
+                },
+                {new: true}
+            );
+            handleError(supplementToUpdate, "Not Found");
+            return res.status(200).json({
+                data: supplementToUpdate,
+                message: `Supplement with id:${req.params.id} has been updated`,
+                code: 200
+            }).end();
+
+        } catch (err) {
+            errorMachine(res, err);
+        }
     },
     async deleteSupplement(req: Request, res: Response) {
         try {
