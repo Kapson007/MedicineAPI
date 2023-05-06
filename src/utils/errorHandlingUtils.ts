@@ -8,11 +8,11 @@ export const handleError = (response: unknown, errMessage: ErrorMessage) => {
 
 export const errorMachine = (res: Response, err: Error) => {
     switch (err.message) {
-        case "Not Found":
-            res.status(404).json({message: err.message, code: 404}).end();
-            break;
         case "Bad Request":
             res.status(400).json({message: "Bad Request", code: 400}).end();
+            break;
+        case "Not Found":
+            res.status(404).json({message: err.message, code: 404}).end();
             break;
         case "Conflict":
             res.status(409).json({message: "Conflict. Resource already exists", code: 409}).end();

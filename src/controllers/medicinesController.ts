@@ -63,7 +63,7 @@ export const medicinesController: IMedicineController = {
         }
     },
 
-    async updateManufactuer(req: Request, res: Response) {
+    async updateManufactuerAtomically(req: Request, res: Response) {
         try {
             const {manufactuer} = req.body;
             const filter = req.query.manufactuer as string;
@@ -78,7 +78,7 @@ export const medicinesController: IMedicineController = {
             // if no resource has been updated, throw an error
             if (areResourceUpdated.modifiedCount === 0) throw new Error("Not Found");
             return res.status(200).json({
-                message: `Manufactuers has been updated from ${filter} to ${manufactuer}. Modified ${areResourceUpdated.modifiedCount} resources}`,
+                message: `Manufactuers has been updated from ${filter} to ${manufactuer}. Modified ${areResourceUpdated.modifiedCount} resources.`,
                 code: 200
             }).end();
         } catch (err) {

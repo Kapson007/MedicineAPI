@@ -1,7 +1,9 @@
 import {Request, Response, NextFunction} from 'express';
 import {IFilter} from '../interfaces/IMedicineController';
-import {Medicines} from '../schemas/medicines'
-import {Cures} from '../schemas/cures'
+import {Medicines} from '../schemas/medicines';
+import {Cures} from '../schemas/cures';
+import {Supplements} from '../schemas/supplements';
+import {Vaccines} from '../schemas/vaccines';
 import _ from 'lodash';
 
 type filterExtended = 'cures' | 'supplements' | 'vaccines';
@@ -13,29 +15,30 @@ type filterExtended = 'cures' | 'supplements' | 'vaccines';
 export const filterMedicines = (req: IFilter, res: Response, next: NextFunction) => {
     let avaliableFilters: string[] = Object.keys(Medicines.schema.paths)
     // extract base path from endpoint and in terms of enpoint add filters to basic list
-    switch(req.baseUrl.slice(1)) {
-        case 'cures':{
+    switch (req.baseUrl.slice(1)) {
+        case 'cures': {
             avaliableFilters = Array.from(new Set(avaliableFilters.concat(expandFilters('cures', Cures.schema.paths))));
             break;
         }
         // TODO: add filter for supplements and vaccines
-        case 'supplements':{
-            avaliableFilters = Array.from(new Set(avaliableFilters.concat(expandFilters('supplements', Cures.schema.paths))));
+        case 'supplements': {
+            avaliableFilters = Array.from(new Set(avaliableFilters.concat(expandFilters('supplements', Supplements.schema.paths))));
             break;
         }
-        case 'vaccines':{
-            avaliableFilters = Array.from(new Set(avaliableFilters.concat(expandFilters('vaccines', Cures.schema.paths))));
+        case 'vaccines': {
+            avaliableFilters = Array.from(new Set(avaliableFilters.concat(expandFilters('vaccines', Vaccines.schema.paths))));
             break;
         }
         // if endpoint is medicne, then not modify list and past basic filters
-        default: break;
+        default:
+            break;
     }
     req.filters = _.pickBy(req.query, (value, key) => avaliableFilters.includes(key));
     next();
 }
 
 export const expandFilters = (path: filterExtended, schema: unknown): string[] => {
-   return Object.keys(schema).map(filter =>`${path}.${filter}`);
+    return Object.keys(schema).map(filter => `${path}.${filter}`);
 }
 
 export const isNotEmpty = (obj: unknown): boolean => {
