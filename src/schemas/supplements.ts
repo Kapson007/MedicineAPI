@@ -28,4 +28,4 @@ export const supplementsSchema = new mongoose.Schema({
         autoIndex: false
     });
 
-const Supplements = mongoose.model<ISupplements>('Supplements', supplementsSchema);
+export const Supplements = mongoose.model<ISupplements>('Supplements', supplementsSchema);

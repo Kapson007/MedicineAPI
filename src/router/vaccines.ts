@@ -12,7 +12,7 @@ export default (): Router => {
     api.get('/', filterMedicines, vaccinesController.findAllVaccines);
 
     // GET /vaccines/:id
-    api.get('/:id', authorize, vaccinesController.findVaccine);
+    api.get('/:id', vaccinesController.findVaccine);
 
     // POST /vaccines
     api.post('/', authorize, vaccinesController.createVaccine);

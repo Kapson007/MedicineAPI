@@ -35,4 +35,4 @@ export const vaccineSchema = new mongoose.Schema({
     }
 });
 
-export const Vaccine = mongoose.model<IVaccine>('Vaccine', vaccineSchema);
+export const Vaccines = mongoose.model<IVaccine>('Vaccine', vaccineSchema);
