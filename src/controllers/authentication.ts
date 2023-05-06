@@ -35,7 +35,7 @@ export const login = async (req: Request, res: Response) => {
         }
 
         const accessToken = jwt.sign({id}, process.env.TOKEN_SECRET, {expiresIn: 120});
-        const refreshToken = jwt.sign({id}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: 1020});
+        const refreshToken = jwt.sign({id}, process.env.REFRESH_TOKEN_SECRET, {expiresIn: 600});
 
         return res.status(201).json({
             status: "Logged in",
