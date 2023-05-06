@@ -530,7 +530,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"cures\": {\n        \"requiredPrescription\": false,\n                \"form\": \"syrop\",\n                \"category\": \"przeciwwirusowe\",\n                \"singleDose\": {\n                    \"value\": 400,\n                    \"unit\": \"mg\",\n                    \"_id\": \"64498217cd8f600847699d13\"\n                },\n                \"ingredients\": \"400mg sustancji czynnej\",\n                \"recommendation\": \"dzieci i dorośli\"\n    }\n}",
+									"raw": "{\n    \"cures\": {\n        \"requiredPrescription\": true,\n        \"form\": \"syrop\"\n                \n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -704,7 +704,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"manufactuer\": \"Ostrovit\"\n}",
+									"raw": "{\n    \"supplements\": {\n            \"form\": \"tabletka\",\n            \"action\": \"wzmacniający odporność\",\n            \"singleDose\": {\n                \"value\": 450,\n                \"unit\": \"mg\"\n            },\n            \"ingredients\": \"250mg sustancji czynnej\"\n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -741,7 +741,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \n}",
+									"raw": "{\n        \"supplements\": {\n            \"action\": \"budowa sylwetki\"\n        }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1006,7 +1006,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \n}",
+									"raw": "{\n    \"vaccines\": {\n        \"category\": \"mRNA\"\n    }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1014,9 +1014,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{vaccines-enpoint}}",
+									"raw": "{{vaccines-enpoint}}/{{vaccineId}}",
 									"host": [
 										"{{vaccines-enpoint}}"
+									],
+									"path": [
+										"{{vaccineId}}"
 									]
 								}
 							},
