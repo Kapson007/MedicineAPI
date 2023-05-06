@@ -3,17 +3,8 @@ import {ISupplementController} from '../interfaces/ISupplementsController';
 import {Medicines} from '../schemas/medicines';
 import {handleError, errorMachine} from '../utils/errorHandlingUtils';
 import {IFilter} from '../interfaces/IMedicineController';
-import {IMedicines, Order} from '../interfaces/IMedicines'
+import {IMedicines, Order, IPatchRequest} from '../interfaces/IMedicines'
 import {isNotEmpty} from '../middlewares/filters';
-import {ISupplements} from '../interfaces/ISupplements';
-
-interface IPatchRequest<T> extends Request {
-    body: T;
-}
-
-type PatchSupplements<T> = {
-    [K in keyof T]?: T[K];
-}
 
 export const supplementsController: ISupplementController = {
     async findSupplement(req: Request, res: Response) {
@@ -94,10 +85,11 @@ export const supplementsController: ISupplementController = {
                 id,
                 {
                     $set: {
-                        ...req.body,
-                        supplements: {
-                        ...(req.body.supplements as PatchSupplements<ISupplements>),
-                        }
+                        ...({'supplements.action': req.body.supplements.action}),
+                        ...({'supplements.form': req.body.supplements.form}),
+                        ...({'supplements.singleDose.unit': req.body.supplements.singleDose.unit}),
+                        ...({'supplements.singleDose.value': req.body.supplements.singleDose.value}),
+                        ...({'supplements.ingredients': req.body.supplements.ingredients}),
                     }
                 },
                 {new: true}

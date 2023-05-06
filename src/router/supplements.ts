@@ -18,10 +18,10 @@ export default (): Router => {
     api.post('/', authorize, supplementsController.createSupplement);
 
     // PUT /supplements/:id
-    api.put('/:id', authorize, supplementsController.updateSupplement);
+    api.put('/:id', supplementsController.updateSupplement);
 
     // PATCH /supplements/:id
-    api.patch('/:id', authorize, supplementsController.updateSupplementPartially);
+    api.patch('/:id', supplementsController.updateSupplementPartially);
 
     // DELETE /supplements/:id
     api.delete('/:id', authorize, supplementsController.deleteSupplement);

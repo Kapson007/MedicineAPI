@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {IVaccine} from '../interfaces/IVaccines';
+import {IVaccines} from '../interfaces/IVaccines';
 
 export const vaccineSchema = new mongoose.Schema({
     singleDose: {
@@ -35,4 +35,4 @@ export const vaccineSchema = new mongoose.Schema({
     }
 });
 
-export const Vaccines = mongoose.model<IVaccine>('Vaccine', vaccineSchema);
+export const Vaccines = mongoose.model<IVaccines>('Vaccine', vaccineSchema);

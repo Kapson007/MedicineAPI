@@ -4,7 +4,7 @@ type VaccineForm = "domięśniowa" | "doustna";
 type VaccineCategory = "mRNA" | "żywe atenuowane" | "antygeny";
 
 
-export interface IVaccine {
+export interface IVaccines {
     singleDose: SingleDose,
     form: VaccineForm,
     category: VaccineCategory,
